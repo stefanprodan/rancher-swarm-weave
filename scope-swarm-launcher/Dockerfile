@@ -1,5 +1,7 @@
 FROM alpine:3.6
 
+ENV WEAVESCOPE_DOCKER_ARGS='--restart unless-stopped'
+
 RUN apk add --update curl bash \
   && rm -rf /var/cache/apk/* \
   && curl -L https://download.docker.com/linux/static/stable/x86_64/docker-17.06.2-ce.tgz -o docker.tgz \
