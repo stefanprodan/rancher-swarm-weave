@@ -57,7 +57,7 @@ provision each node with a Scope container.
 In Rancher UI navigate to _Swarm CLI_ and create the scope-launcher global service with the following command:  
 
 ```bash
-docker service create --name scope-launcher --mode global --detach true \
+docker service create --name scope-launcher --mode global --detach \
     --restart-condition none \
     --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
     stefanprodan/scope-swarm-launcher \
