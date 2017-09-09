@@ -11,11 +11,12 @@ Deploy Rancher server with this command:
 ```bash
 docker run -dp 8080:8080 --name=rancher --restart=unless-stopped rancher/server
 ```
+
 Once the container is up you can access the Rancher UI from your browser on port 8080. The first thing you 
 should do is to setup authentication. Navigate to the Access control section, chose the local authority for 
 the Rancher Management interface and create an admin user with a password.
 
-### Swarm cluster setup
+### Docker Swarm setup
 
 In order to provision Docker Swarm with Rancher you have to create a new environment. 
 In Rancher UI select _Manage Environments_ from the dropdown of environments, click on _Add Environment_ 
@@ -48,12 +49,12 @@ Now that you have a Docker Swarm cluster up and running you can start monitoring
 You'll need a Weave Could service token, if you don't have a Weave token go 
 to [Weave Cloud](https://cloud.weave.works/) and sign up for a Weave Cloud account. 
 
-In order to visualize the Swarm cluster in Weave Cloud you have to deploy the Weave Scope container 
+In order to visualize the Swarm cluster with Weave Cloud you have to deploy the Weave Scope container 
 on each Swarm node. Like the Rancher infrastructure services, Scope needs to run with privileged mode and 
 because Swarm services don't support privileged mode you'll have to use a one-shot service that will 
 provision each node with a Scope container.
 
-In Rancher UI navigate to _Swarm CLI_ and create the scope-launcher global service with the flowing command:  
+In Rancher UI navigate to _Swarm CLI_ and create the scope-launcher global service with the following command:  
 
 ```bash
 docker service create --name scope-launcher --mode global --detach true \
@@ -68,17 +69,20 @@ you should see 3 containers running, one on each host:
 
 ![scope_list](https://github.com/stefanprodan/rancher-swarm-weave/blob/master/screens/scope_list.png)
 
-The Scope launcher will install Scope on each server and will exit. Using `--restart-condition none` we 
+The launcher will install Scope on each server and will exit. Using `--restart-condition none` we 
 instruct Docker Swarm not to restart the service after it exits. 
 
 ![launcher_list](https://github.com/stefanprodan/rancher-swarm-weave/blob/master/screens/launcher_list.png)
 
 With `--mode global` we make sure Scope will be automatically deployed on new servers 
-as you add them to the Swarm. 
+as you add them to the swarm. 
 
-Once the Scope containers are running on all hosts you can login into Weave Cloud and inspect your Swarm Cluster.
+Once the Scope containers are running on all hosts you can login into Weave Cloud and inspect your cluster.
 
 ![scope](https://github.com/stefanprodan/rancher-swarm-weave/blob/master/screens/scope.png)
 
-
-
+With Weave Cloud Scope you can see your Rancher hosts, Docker containers and services in real-time. 
+You can view metrics, tags and metadata of the running processes, containers or hosts. 
+It’s the idea tool to visualize your Docker Swarm clusters and troubleshoot problems that may arise. 
+Scope offers remote access to the Swarm’s nods and containers making it easy to diagnose issues 
+in real-time.
