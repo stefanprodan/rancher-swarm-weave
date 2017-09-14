@@ -8,5 +8,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       mode: global
-        restart_policy:
-          condition: none
+      restart_policy:
+        condition: none
