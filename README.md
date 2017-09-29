@@ -60,7 +60,7 @@ In Rancher UI navigate to _Swarm CLI_ and create the scope-launcher global servi
 docker service create --name scope-launcher --mode global --detach \
     --restart-condition none \
     --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-    stefanprodan/scope-swarm-launcher \
+    weaveworks/scope-swarm-launcher \
     scope launch --service-token=<WEAVE-CLOUD-TOKEN>
 ```
 
